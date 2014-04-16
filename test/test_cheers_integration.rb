@@ -36,4 +36,18 @@ EOS
     assert_equal expected_output, shell_output
   end
 
+  def test_no_input
+    shell_output = ""
+    IO.popen('ruby cheers.rb', 'r+') do |pipe|
+      pipe.puts ""
+      pipe.close_write
+      shell_output = pipe.read
+    end
+    expected_output = <<EOS
+What's your name?
+'s just GRAND!
+EOS
+    assert_equal expected_output, shell_output
+  end
+
 end
